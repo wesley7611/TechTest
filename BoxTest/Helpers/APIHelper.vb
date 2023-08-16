@@ -18,8 +18,8 @@ Public Class APIHelper
                 response = New HttpResponseMessage(Net.HttpStatusCode.InternalServerError)
             End Try
         End Using
-        Return response
 
+        Return response
     End Function
     Public Shared Async Function APIGetAddressAsync(AddressId As String) As Task(Of HttpResponseMessage)
         Dim response As HttpResponseMessage
@@ -34,8 +34,8 @@ Public Class APIHelper
         Return response
     End Function
     Public Shared Async Function RecaptchaValidation(ByVal RecaptchaResponse As String) As Task(Of Boolean)
-
         If String.IsNullOrWhiteSpace(RecaptchaResponse) Then
+            'if no response from user, fail without attempting validation
             Return False
         Else
             Using HttpClient As New HttpClient()
@@ -61,6 +61,5 @@ Public Class APIHelper
                 End If
             End Using
         End If
-
     End Function
 End Class

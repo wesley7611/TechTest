@@ -26,12 +26,14 @@ Namespace Controllers
             Dim response As HttpResponseMessage
             Dim Success As Boolean
 
+            'await Recaptcha Validationfrom server
             Success = Await APIHelper.RecaptchaValidation(AddressLookupModel.RecaptchaResponse)
             If Not Success Then
                 Model.AddressLookupModel.LookupError = "Captcha validation required"
                 Return View("Index", Model) ' do not continue lookup
             End If
 
+            'await address lookup with partial address/postcode entered into search
             response = Await APIHelper.APIAddressLookupAsync(AddressLookupModel.AddressPartial)
             If response.IsSuccessStatusCode Then
                 AddressLookupModel.AddressSuggestions = JSONHelper.DeserialiseSuggestedAddresses(Await response.Content.ReadAsStringAsync())
@@ -44,6 +46,7 @@ Namespace Controllers
         End Function
         <HttpGet()>
         Async Function PopulateAddress(ByVal AddressId As String) As Threading.Tasks.Task(Of ActionResult)
+            'await address lookup information from selected address
             Dim response As HttpResponseMessage = Await APIHelper.APIGetAddressAsync(AddressId)
             If response.IsSuccessStatusCode Then
                 Return Json(JSONHelper.DeserialiseSelectedAddresses(Await response.Content.ReadAsStringAsync()), JsonRequestBehavior.AllowGet)
