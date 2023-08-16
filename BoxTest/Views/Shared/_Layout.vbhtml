@@ -11,7 +11,7 @@
 
 <body>
     <header>
-        <img src="https://www.box.co.uk/Images/box-logo2-FP_2110111013.svg" alt="Logo">
+        <img src="https://www.box.co.uk/Images/box-logo2-FP_2110111013.svg" width="70" height="70" alt="Logo">
         <nav>
             <span class="menu-toggle">&#9776;</span>
             <ul>
